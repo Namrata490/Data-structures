@@ -1,0 +1,127 @@
+#include<iostream>
+using namespace std;
+class Student 
+{
+int rno;
+string name;
+float marks;
+public:
+void read();
+void sortRollNo(Student s[], int n);
+void sortName(Student s[], int n);
+void display();
+};
+void Student::read()
+{
+cout<<"Enter student data(Name Roll Number Marks )";
+cin>>name>>rno>>marks;
+}
+
+void Student::sortRollNo(Student s[], int n)
+{
+for(int i=1;i<n;i++)
+{
+int j=i-1;
+Student val=s[i];
+while(j>=0&&s[j].rno>val.rno)
+{
+s[j+1]=s[j];
+j--;
+}
+s[j+1]=val;
+}
+}
+
+void Student::sortName(Student a[], int n)
+{
+    int gap=n/2;
+    while(gap>=1)
+    {
+        for(int j=gap;j<n;j++)
+        {
+            for(int i=j-gap;i>=0;i=i-gap)
+            {
+                if(a[i+gap].name>a[i].name)
+                {
+                    break;//means data is already sorted
+                }
+                else
+                {
+                    //swap
+                    Student temp;
+                    temp.name=a[i+gap].name;
+                    a[i+gap].name=a[i].name;
+                    a[i].name=temp.name;
+                }
+            }
+        }
+        //recalculate gap
+        gap=gap/2;
+    }
+}
+void Student::display()
+{
+cout<<name<<"\t"<<rno<<"\t"<<marks<<"\t";
+}
+
+int main()
+{
+int n,choice;
+char ch;
+cout<<"Enter number of students whose data is to be recorded";
+cin>>n;
+Student s[n];
+do
+{
+cout<<"\n1. To input data";
+cout<<"\n2. To sort roll number data using insertion sort";
+cout<<"\n3. To sort roll number data using shell sort";
+cout<<"\n4. To display data";
+cout<<"\n5. Exit";
+cout<<"\nEnter your choice";
+cin>>choice;
+
+switch(choice)
+{
+case 1:
+for(int i=0;i<n;i++)
+{
+s[i].read();
+}
+break;
+
+case 2:
+for(int i=0;i<n;i++)
+{
+s[i].sortRollNo(s,n);
+}
+break;
+
+case 3:
+for(int i=0;i<n;i++)
+{
+s[i].sortName(s,n);
+}
+break;
+
+case 4:
+cout<<"Student data is:";
+for(int i=0;i<n;i++)
+{
+s[i].display();
+}
+break;
+case 5:
+cout<<"Exitting Program";
+exit(0);
+break;
+default:
+cout<<"Wrong Choice!!!";
+break;
+}
+cout<<"Do you want to Continue(Y/N)";
+cin>>ch;
+}
+while(ch=='Y'||ch=='y');
+return 0;
+}
